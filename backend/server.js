@@ -1,6 +1,7 @@
 const express=require("express");
 const cors=require("cors");
-const dotenv=require("dotenv");
+const mongoose=require("mongoose");
+require("dotenv").config();
 
 const app=express();
 
@@ -12,6 +13,14 @@ app.get("/api/health",(req,res)=>{
 });
 
 const PORT=process.env.PORT || 8000;
+
+mongoose.connect(process.env.MONGO_URI).then(()=>{
+    console.log("Connected to MongoDB");
+
 app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);
 });
+})
+.catch((error)=>{
+    console.error("Error connecting to MongoDB:", error);
+}); 
